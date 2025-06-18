@@ -1,0 +1,40 @@
+#main-content {
+    margin-top: var(--navbar-height);
+    margin-left: var(--sidebar-width);
+    padding: var(--content-padding);
+    min-height: calc(100vh - var(--navbar-height));
+    transition: all var(--transition-speed) ease;
+    background-color: #f8f9fa;
+}
+
+/* Ajuste cuando el sidebar está colapsado */
+.sidebar.collapsed ~ #main-content {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+/* Comportamiento en móviles */
+@media (max-width: 992px) {
+    #main-content {
+        margin-left: 0;
+        transition: filter var(--transition-speed) ease;
+    }
+    
+    /* Efecto de oscurecimiento */
+    .sidebar.active ~ #main-content {
+        filter: brightness(0.95);
+        pointer-events: none;
+        user-select: none;
+    }
+    
+    /* Overlay para móviles */
+    .sidebar.active ~ #main-content::before {
+        content: '';
+        position: fixed;
+        top: var(--navbar-height);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--overlay-color);
+        z-index: 100;
+    }
+}

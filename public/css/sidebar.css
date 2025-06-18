@@ -1,0 +1,225 @@
+:root {
+    /* Dimensiones */
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 70px;
+    --navbar-height: 60px;
+    
+    /* Tiempos */
+    --transition-speed: 0.3s;
+    
+    /* Colores */
+    --sidebar-bg: #2c3e50;
+    --sidebar-text: #ecf0f1;
+    --sidebar-hover: #34495e;
+    --sidebar-active: #3498db;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --overlay-color: rgba(0, 0, 0, 0.5);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: all var(--transition-speed) ease;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--sidebar-border);
+    min-height: var(--navbar-height);
+    position: sticky;
+    top: 0;
+    background-color: var(--sidebar-bg);
+    z-index: 1;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar-logo i {
+    font-size: 1.5rem;
+    margin-right: 12px;
+    color: var(--sidebar-active);
+    flex-shrink: 0;
+}
+
+.logo-text {
+    font-weight: 600;
+    transition: 
+        opacity var(--transition-speed),
+        margin var(--transition-speed);
+    overflow: hidden;
+}
+
+.sidebar-close-btn {
+    background: none;
+    border: none;
+    color: var(--sidebar-text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+    padding: 0.5rem;
+    margin-left: auto;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.menu-item {
+    width: 100%;
+    position: relative;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0.5rem;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    transition: 
+        background-color var(--transition-speed),
+        transform var(--transition-speed);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-link:hover {
+    background-color: var(--sidebar-hover);
+    transform: translateX(5px);
+}
+
+.menu-link.active {
+    background-color: var(--sidebar-active);
+    font-weight: 500;
+}
+
+.menu-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: white;
+}
+
+.menu-link i {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+    margin-right: 12px;
+    transition: 
+        margin var(--transition-speed),
+        font-size var(--transition-speed);
+    flex-shrink: 0;
+}
+
+.menu-text {
+    transition: 
+        opacity var(--transition-speed),
+        width var(--transition-speed);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Sidebar colapsado */
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .menu-text {
+    opacity: 0;
+    width: 0;
+    margin: 0;
+}
+
+.sidebar.collapsed .menu-link {
+    justify-content: center;
+    padding: 0.75rem 0;
+}
+
+.sidebar.collapsed .menu-link i {
+    margin-right: 0;
+    font-size: 1.25rem;
+}
+
+/* Comportamiento en móviles */
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-width);
+        z-index: 1100;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .sidebar-close-btn {
+        display: block;
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--overlay-color);
+        z-index: 1099;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-speed);
+    }
+    
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    /* Asegurar que el sidebar esté encima del navbar en móviles */
+    .sidebar.active {
+        z-index: 1101;
+    }
+}
+
+/* Scrollbar personalizada para el sidebar */
+.sidebar-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+    background-color: transparent;
+}

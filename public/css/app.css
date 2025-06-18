@@ -1,0 +1,74 @@
+:root {
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 85px;
+    --transition-speed: 0.3s;
+    --primary-color: #5b21b6;
+    --primary-light: #8b5cf6;
+    --sidebar-bg: #1e1b4b;
+    --navbar-bg: #ffffff;
+    --text-dark: #1f2937;
+    --text-light: #f8fafc;
+    --accent-color: #10b981;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8fafc;
+    overflow-x: hidden;
+}
+
+#app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+#main-content {
+    flex: 1;
+    min-height: 100vh;
+    transition: margin-left var(--transition-speed);
+}
+
+@media (max-width: 992px) {
+    #sidebar {
+        position: fixed;
+        left: calc(-1 * var(--sidebar-width));
+        z-index: 1050;
+    }
+    
+    #sidebar.active {
+        left: 0;
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1040;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-speed);
+    }
+    
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+#main-content {
+    margin-top: var(--navbar-height);
+    padding: 1rem;
+    transition: margin-left var(--transition-speed) ease;
+}
+
+@media (min-width: 992px) {
+    #main-content {
+        margin-left: var(--sidebar-width);
+    }
+    
+    .sidebar.collapsed ~ #main-content {
+        margin-left: var(--sidebar-collapsed-width);
+    }
+}
